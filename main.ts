@@ -11,7 +11,10 @@ import {
 
 import { getAccessToken } from "src/getAccessToken";
 import * as path from "path";
+import * as fs from "fs";
 import { queryToShiki } from "src/queryToShiki";
+import { createMD } from "src/createMD";
+import { getVaultBasePath } from "src/checkAdapter";
 
 // Remember to rename these classes and interfaces!
 
@@ -126,8 +129,27 @@ class ShikiImport extends Modal {
 				.onClick(async () => {
 					new Notice(`Вы ввели ${querySearch}!`);
 					try {
-						const token = queryToShiki(querySearch);
-						console.log(token);
+						// Отсюда начинается запрос
+						const response = await queryToShiki(querySearch);
+						if (response) {
+							for (const title of response) {
+								const data = {
+									...title,
+									description: title.description || "",
+								};
+
+								// Название файла
+								// проверка адаптера
+								const vaultPath = getVaultBasePath(this.app);
+
+								const filename = path.join(
+									vaultPath,
+									title.name
+								);
+								console.log(`Путь файла: ${filename}`);
+								createMD(filename, data);
+							}
+						}
 					} catch (error) {
 						console.error(error);
 					}
