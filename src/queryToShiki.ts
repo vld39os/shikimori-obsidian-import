@@ -11,10 +11,26 @@ interface AnimeList {
 	kind: string;
 	score: number;
 	episodes: number;
-	poster: string;
-	genres: string[];
-	studios: string[];
+	poster: Poster;
+	genres: Genres[];
+	studios: Studios[];
 	description: string;
+}
+
+interface Poster {
+	id: number;
+	originalUrl: string;
+	mainUrl: string;
+}
+
+interface Genres {
+	id: number;
+	name: string;
+}
+
+interface Studios {
+	id: number;
+	name: string;
 }
 
 interface GraphQLResponse {

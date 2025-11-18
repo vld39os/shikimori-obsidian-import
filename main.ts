@@ -127,7 +127,6 @@ class ShikiImport extends Modal {
 				.setButtonText("Поиск")
 				.setCta()
 				.onClick(async () => {
-					new Notice(`Вы ввели ${querySearch}!`);
 					try {
 						// Отсюда начинается запрос
 						const response = await queryToShiki(querySearch);
@@ -135,13 +134,19 @@ class ShikiImport extends Modal {
 							for (const title of response) {
 								const data = {
 									...title,
+									poster: title.poster?.mainUrl,
+									genres: title.genres.map(
+										(genre) => genre.name
+									),
+									studios: title.studios.map(
+										(studio) => studio.name
+									),
 									description: title.description || "",
 								};
 
-								// Название файла
 								// проверка адаптера
 								const vaultPath = getVaultBasePath(this.app);
-
+								// Название файла
 								const filename = path.join(
 									vaultPath,
 									title.name
