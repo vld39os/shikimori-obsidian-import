@@ -18,11 +18,8 @@ export function createMD(filepath: string, data: Record<string, any>) {
 
 	// Проверяем, существует ли директория
 	if (!fs.existsSync(directoryPath)) {
-		// Если нет, создаём её и все промежуточные папки
 		fs.mkdirSync(directoryPath, { recursive: true });
 		console.log(`Директория создана: ${directoryPath}`);
-	} else {
-		console.log(`Директория уже существует: ${directoryPath}`);
 	}
 
 	fs.writeFileSync(filePath + ".md", fullContent, "utf-8");

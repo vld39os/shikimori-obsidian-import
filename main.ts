@@ -68,7 +68,6 @@ export default class ShikiImport extends Plugin {
 
 class ShikiImportModal extends Modal {
 	settings: ShikiImportPluginSettings;
-	private limit: number;
 	constructor(app: App, settings: ShikiImportPluginSettings) {
 		super(app);
 		this.settings = settings;
@@ -96,7 +95,6 @@ class ShikiImportModal extends Modal {
 						if (response) {
 							//Импорт пути и запрос
 							const pathFromSetting = this.settings.vaultPath;
-							console.log(pathFromSetting);
 							new ChoiseModal(
 								this.app,
 								response,
@@ -160,7 +158,6 @@ class ShikiImportSettingTab extends PluginSettingTab {
 					.onChange((newFolder) => {
 						this.plugin.settings.vaultPath = newFolder;
 						this.plugin.saveSettings();
-						console.log(this.plugin.settings.vaultPath);
 					});
 			});
 	}

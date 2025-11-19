@@ -74,20 +74,11 @@ export class ChoiseModal extends Modal {
 					watched: false,
 					whenWatched: null,
 				};
-				console.log(
-					`Проверка пути сохранения файлов 1: ${getVaultBasePath(
-						this.app
-					)}`
-				);
-				console.log(
-					`Проверка пути сохранения файлов 2: ${this.pathFromSettings}`
-				);
 				// функция создания файла (принимает папку куда сохранить и обработанные данные)
 				const fullPath = path.join(
 					getVaultBasePath(this.app),
 					this.pathFromSettings
 				);
-				console.log(`Проверка пути сохранения файлов: ${fullPath}`);
 				createMD(fullPath, data);
 			}
 		} else {
