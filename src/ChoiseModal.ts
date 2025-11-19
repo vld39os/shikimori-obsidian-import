@@ -1,6 +1,7 @@
 import { App, Modal, Setting, Notice } from "obsidian";
 import { createMD } from "./createMD";
 import { getVaultBasePath } from "./checkAdapter";
+import ShikiImport, { ShikiImportPluginSettings } from "main";
 import * as path from "path";
 
 interface AnimeList {
@@ -38,10 +39,13 @@ interface Studios {
 export class ChoiseModal extends Modal {
 	private titleList: AnimeList[];
 	private listToImport: AnimeList[];
-	constructor(app: App, titles: AnimeList[]) {
+	private pathFromSettings: string;
+
+	constructor(app: App, titles: AnimeList[], pathFromSettings: string) {
 		super(app);
 		this.titleList = titles;
 		this.listToImport = [];
+		this.pathFromSettings = pathFromSettings;
 	}
 
 	private toggleSelection(title: AnimeList, element: HTMLElement) {
@@ -70,13 +74,21 @@ export class ChoiseModal extends Modal {
 					watched: false,
 					whenWatched: null,
 				};
-
-				// проверка адаптера
-				const vaultPath = getVaultBasePath(this.app);
-				// Название файла
-				const filename = path.join(vaultPath, title.name);
-				console.log(`Путь файла: ${filename}`);
-				createMD(filename, data);
+				console.log(
+					`Проверка пути сохранения файлов 1: ${getVaultBasePath(
+						this.app
+					)}`
+				);
+				console.log(
+					`Проверка пути сохранения файлов 2: ${this.pathFromSettings}`
+				);
+				// функция создания файла (принимает папку куда сохранить и обработанные данные)
+				const fullPath = path.join(
+					getVaultBasePath(this.app),
+					this.pathFromSettings
+				);
+				console.log(`Проверка пути сохранения файлов: ${fullPath}`);
+				createMD(fullPath, data);
 			}
 		} else {
 			new Notice("Не выбрано ни одного аниме.");

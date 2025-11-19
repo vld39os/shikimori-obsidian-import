@@ -44,7 +44,8 @@ interface GraphQLResponse {
 
 // GraphQL запрос
 export async function queryToShiki(
-	queryTitle: string
+	queryTitle: string,
+	limit: number
 ): Promise<AnimeList[] | null> {
 	if (!queryTitle.trim()) {
 		console.log("Ничего не введено");
@@ -52,12 +53,11 @@ export async function queryToShiki(
 	}
 
 	const accessToken = await getAccessToken();
-	console.log(accessToken);
 
 	// Потом сделать чтобы это поле редактировалось через настройки плагина
 	const query = `
     query($search: String!) {
-      animes(search: $search, limit: 5, kind: "!special") {
+      animes(search: $search, limit: ${limit}, kind: "!special") {
         name
         russian
         english
