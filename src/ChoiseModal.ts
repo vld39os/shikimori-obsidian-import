@@ -1,7 +1,6 @@
-import { App, Modal, Setting, Notice } from "obsidian";
+import { App, Modal, Notice } from "obsidian";
 import { createMD } from "./createMD";
 import { getVaultBasePath } from "./checkAdapter";
-import ShikiImport, { ShikiImportPluginSettings } from "main";
 import * as path from "path";
 
 interface AnimeList {
