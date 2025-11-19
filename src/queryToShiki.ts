@@ -15,6 +15,8 @@ interface AnimeList {
 	genres: Genres[];
 	studios: Studios[];
 	description: string;
+	watched: boolean;
+	whenWatched: number;
 }
 
 interface Poster {

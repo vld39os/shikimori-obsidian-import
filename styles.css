@@ -1,8 +1,21 @@
-/*
+.item {
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: flex-start; /* Выравнивание по верхнему краю */
+	gap: 10px; /* Расстояние между постером и информацией */
+	background-color: var(
+		--background-secondary
+	); /* Использование переменной темы Obsidian */
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.item:hover {
+	background-color: var(--interactive-accent);
+}
 
-If your plugin does not need CSS, delete this file.
-
-*/
+.item.item-selected {
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
