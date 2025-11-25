@@ -3,15 +3,13 @@ import * as fs from "fs";
 import fetch from "node-fetch";
 import { App, Modal, Notice } from "obsidian";
 
-const CLIENT_ID =
-	"bce7ad35b631293ff006be882496b29171792c8839b5094115268da7a97ca34c";
-const CLIENT_SECRET =
-	"811459eada36b14ff0cf0cc353f8162e72a7d6e6c7930b647a5c587d1beffe68";
+const CLIENT_ID = "bVlJeuSa9zuVjOBBgMAR35J-poX0QhnDBthC1D0Hn0I";
+const CLIENT_SECRET = "_qPQSlI7Zbh8UYPSmSKnl1WFelHCG_a3bv9DMkfxkNE";
 const REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
 const AUTH_URL = "https://shikimori.one/oauth/authorize";
 const TOKEN_URL = "https://shikimori.one/oauth/token";
 const TOKEN_FILE = "shikimori_token.json";
-const USER_AGENT = "Api Test";
+const USER_AGENT = "Shikimori Import Obsidian Plugin";
 
 interface TokenData {
 	access_token: string;

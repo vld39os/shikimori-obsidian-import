@@ -1,9 +1,9 @@
 {
-  "access_token": "ZIHe7qxIHtH5otz_Xfvh5_zw-2EJpEzCohx9WdCh_dM",
+  "access_token": "ZgFJ3ZD2O6397zIelSiFpuOV_1tBJVvbjT7giVBwwuI",
   "token_type": "Bearer",
   "expires_in": 86400,
-  "refresh_token": "c3W8QtKwOB-QLGn7A9VJYTNFZIS54P6-bURD9D_JSV0",
+  "refresh_token": "ZWSynm1oCmB4Xc0M82quvD0r6dBTPoh9w1stfm89sBE",
   "scope": "user_rates comments topics",
-  "created_at": 1763460403,
-  "last_update": 1763460402
+  "created_at": 1764075241,
+  "last_update": 1764075241
 }

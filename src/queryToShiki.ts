@@ -1,7 +1,7 @@
 import { getAccessToken } from "./getAccessToken";
 
 const GRAPHQL_URL = "https://shikimori.one/api/graphql";
-const USER_AGENT = "Api Test";
+const USER_AGENT = "Shikimori Import Obsidian Plugin";
 
 interface AnimeList {
 	name: string;

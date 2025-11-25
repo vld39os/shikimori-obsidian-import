@@ -1,0 +1,9 @@
+{
+	"id": "shikimori-obsidian-import",
+	"name": "Shikimori Import",
+	"version": "0.1.0",
+	"minAppVersion": "0.15.0",
+	"description": "Import a Markdown files created from Shikimori GraphQL query",
+	"author": "vld39os",
+	"isDesktopOnly": false
+}

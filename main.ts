@@ -10,7 +10,7 @@ import {
 } from "obsidian";
 
 import { queryToShiki } from "src/queryToShiki";
-import { ChoiseModal } from "src/ChoiseModal";
+import { ChoiceModal } from "src/ChoiceModal";
 
 export interface ShikiImportPluginSettings {
 	mySetting: string;
@@ -95,7 +95,7 @@ class ShikiImportModal extends Modal {
 						if (response) {
 							//Импорт пути и запрос
 							const pathFromSetting = this.settings.vaultPath;
-							new ChoiseModal(
+							new ChoiceModal(
 								this.app,
 								response,
 								pathFromSetting

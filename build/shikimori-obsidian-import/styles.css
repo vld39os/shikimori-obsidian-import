@@ -1,0 +1,21 @@
+.item {
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: flex-start; /* Выравнивание по верхнему краю */
+	gap: 10px; /* Расстояние между постером и информацией */
+	background-color: var(
+		--background-secondary
+	); /* Использование переменной темы Obsidian */
+}
+
+.item:hover {
+	background-color: var(--interactive-accent);
+}
+
+.item.item-selected {
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+}

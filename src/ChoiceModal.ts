@@ -35,7 +35,7 @@ interface Studios {
 	name: string;
 }
 
-export class ChoiseModal extends Modal {
+export class ChoiceModal extends Modal {
 	private titleList: AnimeList[];
 	private listToImport: AnimeList[];
 	private pathFromSettings: string;
