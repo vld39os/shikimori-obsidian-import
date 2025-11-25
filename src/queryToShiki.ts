@@ -45,6 +45,7 @@ interface GraphQLResponse {
 // GraphQL запрос
 export async function queryToShiki(
 	queryTitle: string,
+	queryType: string,
 	limit: number
 ): Promise<AnimeList[] | null> {
 	if (!queryTitle.trim()) {
@@ -55,7 +56,9 @@ export async function queryToShiki(
 	const accessToken = await getAccessToken();
 
 	// Потом сделать чтобы это поле редактировалось через настройки плагина
-	const query = `
+	let query = "";
+	if (queryType === "anime") {
+	query = `
     query($search: String!) {
       animes(search: $search, limit: ${limit}, kind: "!special") {
         name
@@ -71,7 +74,27 @@ export async function queryToShiki(
         description
       }
     }
-    `;
+    `};
+	if (queryType === "manga") {
+		query = `
+    query($search: String!) {
+      manga(search: $search, limit: ${limit}, kind: "!special") {
+        name
+        russian
+        english
+        japanese
+        kind
+        score
+		chapters
+        poster { mainUrl }
+        genres { name }
+        description
+      }
+    }
+    `
+	};
+		
+	
 
 	const variables = { search: queryTitle };
 

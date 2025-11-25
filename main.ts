@@ -1,5 +1,6 @@
 import {
 	App,
+	DropdownComponent,
 	Editor,
 	MarkdownView,
 	Modal,
@@ -76,11 +77,18 @@ class ShikiImportModal extends Modal {
 	onOpen() {
 		this.setTitle("Поиск аниме по БД Shikimori");
 		let querySearch = "";
+		let queryType = "anime";
 		new Setting(this.contentEl).setName("Запрос").addText((text) =>
 			text.onChange((value) => {
 				querySearch = value;
 			})
 		);
+
+		new DropdownComponent(this.contentEl).addOption("anime", "Аниме")
+		.addOption("manga", "Манга")
+		.onChange((content) => {queryType = content;
+			console.log(queryType);
+		});
 
 		new Setting(this.contentEl).addButton((btn) =>
 			btn
@@ -90,7 +98,7 @@ class ShikiImportModal extends Modal {
 					try {
 						// Импорт лимита и запрос
 						const limit = this.settings.importCount;
-						const response = await queryToShiki(querySearch, limit);
+						const response = await queryToShiki(querySearch, queryType, limit);
 
 						if (response) {
 							//Импорт пути и запрос
