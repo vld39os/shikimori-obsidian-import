@@ -1,9 +1,0 @@
-{
-  "access_token": "ZgFJ3ZD2O6397zIelSiFpuOV_1tBJVvbjT7giVBwwuI",
-  "token_type": "Bearer",
-  "expires_in": 86400,
-  "refresh_token": "ZWSynm1oCmB4Xc0M82quvD0r6dBTPoh9w1stfm89sBE",
-  "scope": "user_rates comments topics",
-  "created_at": 1764075241,
-  "last_update": 1764075241
-}
