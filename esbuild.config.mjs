@@ -15,7 +15,7 @@ const context = await esbuild.context({
 	},
 	entryPoints: ["main.ts"],
 	bundle: true,
-	external: ["obsidian"],
+	external: ["obsidian"], // убрать потом два последних импорта
 	format: "cjs",
 	target: "es2018",
 	logLevel: "info",

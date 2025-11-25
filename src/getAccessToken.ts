@@ -1,6 +1,5 @@
 import * as path from "path";
 import * as fs from "fs";
-import fetch from "node-fetch";
 import { App, Modal, Notice } from "obsidian";
 
 const CLIENT_ID = "bVlJeuSa9zuVjOBBgMAR35J-poX0QhnDBthC1D0Hn0I";
