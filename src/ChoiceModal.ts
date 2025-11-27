@@ -2,52 +2,21 @@ import { App, Modal, Notice } from "obsidian";
 import { createMD } from "./createMD";
 import { getVaultBasePath } from "./checkAdapter";
 import * as path from "path";
-
-interface AnimeList {
-	name: string;
-	russian: string;
-	english: string;
-	japanese: string;
-	kind: string;
-	score: number;
-	episodes: number;
-	poster: Poster;
-	genres: Genres[];
-	studios: Studios[];
-	description: string;
-	watched: boolean;
-	whenWatched: number;
-}
-
-interface Poster {
-	id: number;
-	originalUrl: string;
-	mainUrl: string;
-}
-
-interface Genres {
-	id: number;
-	name: string;
-}
-
-interface Studios {
-	id: number;
-	name: string;
-}
+import { ImportableItem, ListToImport } from "./interfaces";
 
 export class ChoiceModal extends Modal {
-	private titleList: AnimeList[];
-	private listToImport: AnimeList[];
+	private titleList: ImportableItem[];
+	private listToImport: ListToImport;
 	private pathFromSettings: string;
 
-	constructor(app: App, titles: AnimeList[], pathFromSettings: string) {
+	constructor(app: App, titles: ImportableItem[], pathFromSettings: string) {
 		super(app);
 		this.titleList = titles;
 		this.listToImport = [];
 		this.pathFromSettings = pathFromSettings;
 	}
 
-	private toggleSelection(title: AnimeList, element: HTMLElement) {
+	private toggleSelection(title: ImportableItem, element: HTMLElement) {
 		const index = this.listToImport.findIndex(
 			(item) => item.name === title.name
 		);
@@ -61,17 +30,30 @@ export class ChoiceModal extends Modal {
 	}
 
 	private onFinishSelection() {
-		console.log("Выбранные аниме для импорта:", this.listToImport);
+		console.log("Выбранные объекты для импорта:", this.listToImport);
 		if (this.listToImport.length > 0) {
 			for (const title of this.listToImport) {
+				// обработка студий
+				let processedStudios: string[] = [];
+				if ("studios" in title && Array.isArray(title.studios)) {
+					processedStudios = title.studios.map(
+						(studio) => studio.name
+					);
+				}
+
+				//обработка описания
+				const processedDescription = title.description.replace(
+					/\[.*?\]/g,
+					""
+				);
+
+				// ввод данных
 				const data = {
 					...title,
 					poster: title.poster?.mainUrl,
 					genres: title.genres.map((genre) => genre.name),
-					studios: title.studios.map((studio) => studio.name),
-					description: title.description || "",
-					watched: false,
-					whenWatched: null,
+					...(processedStudios ? { studios: processedStudios } : {}), // проверка на наличие студии для манги
+					description: processedDescription || "",
 				};
 				// функция создания файла (принимает папку куда сохранить и обработанные данные)
 				const fullPath = path.join(

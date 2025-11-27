@@ -1,43 +1,13 @@
 import { getAccessToken } from "./getAccessToken";
+import { ListToImport } from "./interfaces";
 
 const GRAPHQL_URL = "https://shikimori.one/api/graphql";
 const USER_AGENT = "Shikimori Import Obsidian Plugin";
 
-interface AnimeList {
-	name: string;
-	russian: string;
-	english: string;
-	japanese: string;
-	kind: string;
-	score: number;
-	episodes: number;
-	poster: Poster;
-	genres: Genres[];
-	studios: Studios[];
-	description: string;
-	watched: boolean;
-	whenWatched: number;
-}
-
-interface Poster {
-	id: number;
-	originalUrl: string;
-	mainUrl: string;
-}
-
-interface Genres {
-	id: number;
-	name: string;
-}
-
-interface Studios {
-	id: number;
-	name: string;
-}
-
 interface GraphQLResponse {
 	data?: {
-		animes: AnimeList[];
+		animes: ListToImport;
+		mangas: ListToImport;
 	};
 	errors?: Array<{ message: string; locations?: any[]; path?: string[] }>;
 }
@@ -47,7 +17,7 @@ export async function queryToShiki(
 	queryTitle: string,
 	queryType: string,
 	limit: number
-): Promise<AnimeList[] | null> {
+): Promise<ListToImport | null> {
 	if (!queryTitle.trim()) {
 		console.log("Ничего не введено");
 		return null;
@@ -58,7 +28,7 @@ export async function queryToShiki(
 	// Потом сделать чтобы это поле редактировалось через настройки плагина
 	let query = "";
 	if (queryType === "anime") {
-	query = `
+		query = `
     query($search: String!) {
       animes(search: $search, limit: ${limit}, kind: "!special") {
         name
@@ -74,11 +44,12 @@ export async function queryToShiki(
         description
       }
     }
-    `};
+    `;
+	}
 	if (queryType === "manga") {
 		query = `
     query($search: String!) {
-      manga(search: $search, limit: ${limit}, kind: "!special") {
+      mangas(search: $search, limit: ${limit}) {
         name
         russian
         english
@@ -86,15 +57,14 @@ export async function queryToShiki(
         kind
         score
 		chapters
+		volumes
         poster { mainUrl }
         genres { name }
         description
       }
     }
-    `
-	};
-		
-	
+    `;
+	}
 
 	const variables = { search: queryTitle };
 
@@ -133,10 +103,15 @@ export async function queryToShiki(
 	}
 
 	const animes = data.data?.animes || [];
-	if (animes.length === 0) {
+	const mangas = data.data?.mangas || [];
+	if (animes.length === 0 && mangas.length === 0) {
 		console.log("Ничего не найдено");
 		return null;
 	}
 
-	return animes;
+	if (mangas.length === 0) {
+		return animes;
+	} else {
+		return mangas;
+	}
 }

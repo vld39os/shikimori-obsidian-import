@@ -78,42 +78,45 @@ class ShikiImportModal extends Modal {
 		this.setTitle("Поиск аниме по БД Shikimori");
 		let querySearch = "";
 		let queryType = "anime";
+		new DropdownComponent(this.contentEl)
+			.addOption("anime", "Аниме")
+			.addOption("manga", "Манга/Ранобэ")
+			.onChange((content) => {
+				queryType = content;
+				console.log(queryType);
+			});
+
 		new Setting(this.contentEl).setName("Запрос").addText((text) =>
 			text.onChange((value) => {
 				querySearch = value;
 			})
 		);
 
-		new DropdownComponent(this.contentEl).addOption("anime", "Аниме")
-		.addOption("manga", "Манга")
-		.onChange((content) => {queryType = content;
-			console.log(queryType);
+		const buttonContainer = this.contentEl.createDiv();
+		const searchButton = buttonContainer.createEl("button", {
+			text: "Поиск",
+			cls: "search-button",
 		});
 
-		new Setting(this.contentEl).addButton((btn) =>
-			btn
-				.setButtonText("Поиск")
-				.setCta()
-				.onClick(async () => {
-					try {
-						// Импорт лимита и запрос
-						const limit = this.settings.importCount;
-						const response = await queryToShiki(querySearch, queryType, limit);
+		searchButton.onClickEvent(async () => {
+			try {
+				// Импорт лимита и запрос
+				const limit = this.settings.importCount;
+				const response = await queryToShiki(
+					querySearch,
+					queryType,
+					limit
+				);
 
-						if (response) {
-							//Импорт пути и запрос
-							const pathFromSetting = this.settings.vaultPath;
-							new ChoiceModal(
-								this.app,
-								response,
-								pathFromSetting
-							).open();
-						}
-					} catch (error) {
-						console.error(error);
-					}
-				})
-		);
+				if (response) {
+					//Импорт пути и запрос
+					const pathFromSetting = this.settings.vaultPath;
+					new ChoiceModal(this.app, response, pathFromSetting).open();
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		});
 	}
 
 	onClose() {
